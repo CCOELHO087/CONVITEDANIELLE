@@ -1,0 +1,573 @@
+/* ==========================================================================
+   1. VARIÁVEIS E BASE MOBILE-FRIENDLY
+   ========================================================================== */
+:root {
+  --purple-deep: #0e001a;
+  --purple-card: rgba(35, 3, 56, 0.90);
+  --gold-primary: #f5c531;
+  --gold-bright: #ffe685;
+  --gold-gradient: linear-gradient(135deg, #ffe599 0%, #f5c531 35%, #ca9515 70%, #fff2b2 100%);
+  --gold-foil: linear-gradient(90deg, #d4af37, #fff4b8, #aa7c11, #fff4b8, #d4af37);
+  --font-royal: 'Cinzel Decorative', Georgia, serif;
+  --font-serif: 'Cinzel', serif;
+  --font-script: 'Pinyon Script', cursive;
+  --font-body: 'Montserrat', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--purple-deep);
+  background-image: 
+    radial-gradient(circle at 50% 15%, rgba(93, 21, 143, 0.45) 0%, transparent 60%),
+    radial-gradient(circle at 50% 85%, rgba(31, 1, 51, 0.95) 0%, #06000c 100%);
+  color: #fff;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+input, textarea, select {
+  user-select: auto !important;
+  -webkit-user-select: auto !important;
+}
+
+/* Canvas das Lanternas Flutuantes */
+#lanterns-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   2. CONTROLES NO TOPO (ÁUDIO E SHARE)
+   ========================================================================== */
+.top-controls {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  gap: 10px;
+  z-index: 500;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.glass-btn-round {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(31, 1, 51, 0.75);
+  border: 1.5px solid var(--gold-primary);
+  color: var(--gold-bright);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.glass-btn-round.playing i {
+  animation: pulseMusic 1.5s infinite;
+}
+
+@keyframes pulseMusic {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); color: #fff; }
+}
+
+/* ==========================================================================
+   3. ENVELOPE DE ABERTURA
+   ========================================================================== */
+.envelope-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  padding: 16px;
+  background: radial-gradient(circle at center, rgba(30, 0, 48, 0.95) 0%, rgba(10, 0, 18, 0.98) 100%);
+}
+
+.envelope-box {
+  position: relative;
+  width: 295px;
+  height: 205px;
+  background: linear-gradient(135deg, #2b0042, #170024);
+  border-radius: 10px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 35px rgba(245, 197, 49, 0.25);
+  border: 1px solid rgba(245, 197, 49, 0.45);
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+.envelope-ribbon-v {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 26px;
+  transform: translateX(-50%);
+  background: var(--gold-foil);
+  z-index: 5;
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 147.5px solid transparent;
+  border-right: 147.5px solid transparent;
+  border-top: 115px solid #3d005f;
+  transform-origin: top center;
+  z-index: 6;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6));
+}
+
+.envelope-pocket {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 147.5px solid #1a0029;
+  border-right: 147.5px solid #1a0029;
+  border-bottom: 115px solid #28013e;
+  border-top: 90px solid transparent;
+  border-radius: 0 0 10px 10px;
+  z-index: 4;
+}
+
+.wax-seal {
+  position: absolute;
+  top: 110px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffeaa7 0%, #d4af37 40%, #87620a 90%);
+  z-index: 7;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8), 0 0 30px rgba(245, 197, 49, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid rgba(255, 235, 150, 0.5);
+  cursor: pointer;
+}
+
+.wax-seal svg {
+  width: 50px;
+  height: 50px;
+  fill: #3b001a;
+}
+
+.envelope-instruction {
+  margin-top: 30px;
+  color: var(--gold-bright);
+  font-size: 0.85rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: pulseText 2s infinite;
+}
+
+@keyframes pulseText {
+  0%, 100% { opacity: 0.7; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-4px); }
+}
+
+.magic-light-burst {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #ffd700;
+  box-shadow: 0 0 120px 80px rgba(255, 220, 80, 0.95);
+  opacity: 0;
+  z-index: 30;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   4. CONVITE PRINCIPAL
+   ========================================================================== */
+.main-wrapper {
+  width: 100%;
+  max-width: 480px;
+  margin: 25px auto 60px auto;
+  padding: 12px;
+  z-index: 10;
+  position: relative;
+  opacity: 0;
+  display: none;
+}
+
+.invite-card {
+  background: var(--purple-card);
+  border-radius: 22px;
+  padding: 36px 18px 30px 18px;
+  border: 1.5px solid rgba(245, 197, 49, 0.45);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85), 0 0 30px rgba(245, 197, 49, 0.2);
+  backdrop-filter: blur(12px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.ornate-border {
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(245, 197, 49, 0.3);
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+.sol-corona-badge {
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 10px auto;
+  filter: drop-shadow(0 0 12px rgba(245, 197, 49, 0.8));
+}
+
+.invite-header-title {
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  font-weight: 600;
+}
+
+.debutante-name {
+  font-family: var(--font-script);
+  font-size: clamp(3.2rem, 11vw, 4.4rem);
+  line-height: 1.1;
+  margin: 6px 0 4px 0;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 10px rgba(245, 197, 49, 0.5));
+}
+
+.age-ribbon {
+  font-family: var(--font-royal);
+  font-size: 1.05rem;
+  letter-spacing: 5px;
+  color: var(--gold-bright);
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.age-ribbon::before, .age-ribbon::after {
+  content: '—';
+  margin: 0 6px;
+  color: rgba(245, 197, 49, 0.5);
+}
+
+.themed-quote {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #ebd7ff;
+  margin: 0 auto 24px auto;
+  padding: 0 8px;
+  font-style: italic;
+}
+
+.themed-quote span {
+  color: var(--gold-bright);
+  font-weight: 600;
+}
+
+/* Painel Data e Local */
+.gala-grid {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(245, 197, 49, 0.25);
+  border-radius: 14px;
+  padding: 18px 12px;
+  margin-bottom: 22px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.gala-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.gala-item.full {
+  grid-column: 1 / -1;
+  border-top: 1px dashed rgba(245, 197, 49, 0.25);
+  padding-top: 14px;
+}
+
+.gala-icon {
+  font-size: 1.25rem;
+  color: var(--gold-primary);
+  margin-bottom: 4px;
+}
+
+.gala-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #cfb1ef;
+}
+
+.gala-val {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-top: 2px;
+}
+
+.gala-sub {
+  font-size: 0.78rem;
+  color: var(--gold-bright);
+}
+
+/* Contador Regressivo */
+.countdown-section {
+  margin-bottom: 24px;
+}
+
+.countdown-header {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold-bright);
+  margin-bottom: 10px;
+}
+
+.countdown-flex {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.clock-pill {
+  background: rgba(31, 1, 51, 0.85);
+  border: 1px solid rgba(245, 197, 49, 0.35);
+  border-radius: 10px;
+  padding: 8px 4px;
+  min-width: 58px;
+}
+
+.clock-num {
+  font-family: var(--font-royal);
+  font-size: 1.35rem;
+  color: var(--gold-bright);
+  line-height: 1;
+}
+
+.clock-tag {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #cca8ea;
+  margin-top: 4px;
+}
+
+/* Botões */
+.actions-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.royal-btn {
+  width: 100%;
+  background: var(--gold-gradient);
+  color: #190029;
+  border: none;
+  padding: 15px 18px;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(245, 197, 49, 0.35);
+  text-decoration: none;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.royal-btn:active {
+  transform: scale(0.97);
+}
+
+.royal-btn.outline {
+  background: rgba(31, 1, 51, 0.6);
+  border: 1.5px solid var(--gold-primary);
+  color: var(--gold-bright);
+  box-shadow: none;
+}
+
+.quick-actions-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+
+/* ==========================================================================
+   5. MODAIS
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 0, 16, 0.88);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.modal-backdrop.active {
+  display: flex;
+}
+
+.modal-window {
+  background: linear-gradient(160deg, #2b0144 0%, #150024 100%);
+  width: 100%;
+  max-width: 400px;
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 18px;
+  border: 1.5px solid var(--gold-primary);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+  padding: 24px 18px;
+  position: relative;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid var(--gold-primary);
+  color: var(--gold-bright);
+  font-size: 1.2rem;
+  cursor: pointer;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-title {
+  font-family: var(--font-royal);
+  color: var(--gold-bright);
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.modal-desc {
+  font-size: 0.82rem;
+  color: #d8beee;
+  text-align: center;
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+
+.field-group {
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.field-group label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--gold-bright);
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.custom-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(245, 197, 49, 0.4);
+  border-radius: 8px;
+  padding: 12px;
+  color: #fff;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.custom-input:focus {
+  border-color: #fff;
+  box-shadow: 0 0 10px rgba(245, 197, 49, 0.4);
+}
+
+/* Dress Code */
+.dress-palette-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin: 14px 0;
+}
+
+.palette-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.swatch-ball {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+}
+
+.swatch-title {
+  font-size: 0.65rem;
+  color: #dec8f5;
+}
+
+.exclusive-color-box {
+  border: 1px dashed #ff79c6;
+  background: rgba(255, 121, 198, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  color: #ffc9e8;
+  line-height: 1.4;
+  margin-top: 12px;
+}

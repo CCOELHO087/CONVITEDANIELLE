@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#120024">
+  <title>15 Anos | Daniele Coelho ✨</title>
+
+  <!-- Tipografia de Luxo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;500;600;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+  
+  <!-- Ícones FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- CSS Externo -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- GSAP Engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+
+  <!-- Canvas das Lanternas Flutuantes -->
+  <canvas id="lanterns-canvas"></canvas>
+
+  <!-- Botões de Topo -->
+  <div class="top-controls" id="topControls">
+    <button class="glass-btn-round" id="shareBtn" aria-label="Compartilhar">
+      <i class="fa-solid fa-share-nodes"></i>
+    </button>
+    <button class="glass-btn-round" id="musicToggleBtn" aria-label="Música">
+      <i class="fa-solid fa-volume-high"></i>
+    </button>
+  </div>
+
+  <!-- Trilha Sonora -->
+  <audio id="bgMusic" loop preload="none">
+    <source src="https://ia800108.us.archive.org/3/items/i-see-the-light-tangled-piano-instrumental/I%20See%20The%20Light%20Piano.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- TELA INICIAL: ENVELOPE -->
+  <div class="envelope-screen" id="envelopeScreen">
+    <div class="envelope-box" id="envelopeWrapper">
+      <div class="envelope-ribbon-v"></div>
+      <div class="envelope-flap" id="envelopeFlap"></div>
+      <div class="envelope-pocket"></div>
+
+      <!-- Selo com Símbolo de Corona -->
+      <div class="wax-seal" id="waxSeal">
+        <svg viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="14" />
+          <path d="M50 18 L53 32 L47 32 Z" />
+          <path d="M50 82 L53 68 L47 68 Z" />
+          <path d="M18 50 L32 53 L32 47 Z" />
+          <path d="M82 50 L68 53 L68 47 Z" />
+          <path d="M28 28 L39 37 L35 41 Z" />
+          <path d="M72 72 L61 63 L65 59 Z" />
+          <path d="M72 28 L63 39 L59 35 Z" />
+          <path d="M28 72 L39 63 L35 59 Z" />
+          <circle cx="50" cy="7" r="2.5" />
+          <circle cx="50" cy="93" r="2.5" />
+          <circle cx="7" cy="50" r="2.5" />
+          <circle cx="93" cy="50" r="2.5" />
+        </svg>
+      </div>
+
+      <div class="magic-light-burst" id="lightBurst"></div>
+    </div>
+
+    <div class="envelope-instruction">
+      <i class="fa-solid fa-sparkles"></i>
+      Toque no selo para abrir
+      <i class="fa-solid fa-sparkles"></i>
+    </div>
+  </div>
+
+  <!-- CONVITE PRINCIPAL -->
+  <main class="main-wrapper" id="invitationContainer">
+    <div class="invite-card">
+      <div class="ornate-border"></div>
+
+      <!-- Sol de Corona Decorativo -->
+      <svg class="sol-corona-badge" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="15" fill="url(#solGrad)" />
+        <path d="M50 12 L55 30 L45 30 Z" fill="url(#solGrad)" />
+        <path d="M50 88 L55 70 L45 70 Z" fill="url(#solGrad)" />
+        <path d="M12 50 L30 55 L30 45 Z" fill="url(#solGrad)" />
+        <path d="M88 50 L70 55 L70 45 Z" fill="url(#solGrad)" />
+        <path d="M22 22 L36 34 L32 38 Z" fill="url(#solGrad)" />
+        <path d="M78 78 L64 66 L68 62 Z" fill="url(#solGrad)" />
+        <path d="M78 22 L66 36 L62 32 Z" fill="url(#solGrad)" />
+        <path d="M22 78 L36 64 L32 60 Z" fill="url(#solGrad)" />
+        <defs>
+          <linearGradient id="solGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fff4b8"/>
+            <stop offset="50%" stop-color="#f5c531"/>
+            <stop offset="100%" stop-color="#aa7c11"/>
+          </linearGradient>
+        </defs>
+      </svg>
+
+      <div class="invite-header-title">Celebração de 15 Anos</div>
+      <h1 class="debutante-name">Daniele Coelho</h1>
+      <div class="age-ribbon">UMA NOITE ENCANTADA</div>
+
+      <p class="themed-quote">
+        "E no meio de tantas luzes no céu, <span>a mais brilhante é a que ilumina esta noite inesquecível.</span> Te convido para fazer parte da minha história de encanto!"
+      </p>
+
+      <!-- Painel de Dados -->
+      <div class="gala-grid">
+        <div class="gala-item">
+          <i class="fa-regular fa-calendar-check gala-icon"></i>
+          <span class="gala-label">Data</span>
+          <span class="gala-val">06 de Novembro</span>
+          <span class="gala-sub">Sexta-Feira • 2026</span>
+        </div>
+
+        <div class="gala-item">
+          <i class="fa-regular fa-clock gala-icon"></i>
+          <span class="gala-label">Horário</span>
+          <span class="gala-val">20:00 Horas</span>
+          <span class="gala-sub">Recepção</span>
+        </div>
+
+        <div class="gala-item full">
+          <i class="fa-solid fa-location-dot gala-icon"></i>
+          <span class="gala-label">Local</span>
+          <span class="gala-val">Espaço Aconchego</span>
+          <span class="gala-sub">Canacuí — Ouricuri-PE</span>
+        </div>
+      </div>
+
+      <!-- Contagem Regressiva -->
+      <div class="countdown-section">
+        <div class="countdown-header">Contagem Regressiva:</div>
+        <div class="countdown-flex">
+          <div class="clock-pill">
+            <div class="clock-num" id="d-days">00</div>
+            <div class="clock-tag">Dias</div>
+          </div>
+          <div class="clock-pill">
+            <div class="clock-num" id="d-hours">00</div>
+            <div class="clock-tag">Horas</div>
+          </div>
+          <div class="clock-pill">
+            <div class="clock-num" id="d-mins">00</div>
+            <div class="clock-tag">Min</div>
+          </div>
+          <div class="clock-pill">
+            <div class="clock-num" id="d-secs">00</div>
+            <div class="clock-tag">Seg</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botões de Ação -->
+      <div class="actions-stack">
+        <button class="royal-btn" id="openRsvpBtn">
+          <i class="fa-brands fa-whatsapp"></i> Confirmar Presença
+        </button>
+
+        <div class="quick-actions-row">
+          <a class="royal-btn outline" href="https://www.google.com/maps/search/?api=1&query=Espa%C3%A7o+Aconchego+Canacui+Ouricuri+PE" target="_blank" rel="noopener">
+            <i class="fa-solid fa-map-location-dot"></i> Como Chegar
+          </a>
+          
+          <button class="royal-btn outline" id="openDressBtn">
+            <i class="fa-solid fa-vest-patches"></i> Dress Code
+          </button>
+        </div>
+
+        <div class="quick-actions-row">
+          <button class="royal-btn outline" id="saveCalendarBtn">
+            <i class="fa-regular fa-calendar-plus"></i> Agendar
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL RSVP (CONFIRMAÇÃO) -->
+  <div class="modal-backdrop" id="rsvpModal">
+    <div class="modal-window">
+      <button class="modal-close-btn" id="closeRsvpModal">&times;</button>
+      <h2 class="modal-title">Confirmar Presença</h2>
+      <p class="modal-desc">Informe seu nome e quantos acompanhantes virão com você.</p>
+      
+      <form id="rsvpForm">
+        <div class="field-group">
+          <label for="guestName">Seu Nome Completo:</label>
+          <input type="text" id="guestName" class="custom-input" placeholder="Ex: Maria Silva" required>
+        </div>
+
+        <div class="field-group">
+          <label for="guestCount">Quantidade de Acompanhantes:</label>
+          <input type="number" id="guestCount" class="custom-input" min="0" max="10" value="0" required>
+        </div>
+
+        <button type="submit" class="royal-btn" style="margin-top: 10px;">
+          <i class="fa-brands fa-whatsapp"></i> Enviar Confirmacão
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL DRESS CODE -->
+  <div class="modal-backdrop" id="dressModal">
+    <div class="modal-window">
+      <button class="modal-close-btn" id="closeDressModal">&times;</button>
+      <h2 class="modal-title">Traje & Paleta</h2>
+      <p class="modal-desc">Traje Sugerido: <strong>Passeio Completo / Esporte Fino</strong></p>
+
+      <div class="dress-palette-grid">
+        <div class="palette-circle">
+          <div class="swatch-ball" style="background: #120024;"></div>
+          <span class="swatch-title">Roxo</span>
+        </div>
+        <div class="palette-circle">
+          <div class="swatch-ball" style="background: #1a0033;"></div>
+          <span class="swatch-title">Uva</span>
+        </div>
+        <div class="palette-circle">
+          <div class="swatch-ball" style="background: #2b0144;"></div>
+          <span class="swatch-title">Ameixa</span>
+        </div>
+        <div class="palette-circle">
+          <div class="swatch-ball" style="background: #d4af37;"></div>
+          <span class="swatch-title">Dourado</span>
+        </div>
+      </div>
+
+      <div class="exclusive-color-box">
+        <strong>Atenção:</strong> A cor <u>Lilás / Violeta Claro</u> é exclusiva da aniversariante. Agradecemos a compreensão!
+      </div>
+    </div>
+  </div>
+
+  <!-- JS Externo -->
+  <script src="script.js"></script>
+</body>
+</html>
